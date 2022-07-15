@@ -3,7 +3,7 @@
 #include <stb_image.h>
 
 #include <Shader.hh>
-#include "test/logger.hh"
+#include "FileHandler.hh"
 
 #include <iostream>
 
@@ -49,7 +49,13 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader ourShader("assets/shaders/Texture.vs.glsl", "assets/shaders/Texture.fs.glsl"); 
+
+    std::string vertexSource, fragmentSource;
+
+    SuperSDF::FileHandler::ReadTextFile("assets/shaders/Texture.vs.glsl", &vertexSource);
+    SuperSDF::FileHandler::ReadTextFile("assets/shaders/Texture.fs.glsl", &fragmentSource);
+
+    Shader* ourShader = new Shader(vertexSource.c_str(), fragmentSource.c_str());
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -86,8 +92,6 @@ int main()
     // texture coord attribute
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
-
-    std::cout << Test() << std::endl;
 
     // load and create a texture 
     // -------------------------
@@ -133,7 +137,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture);
 
         // render container
-        ourShader.use();
+        ourShader->Bind();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -148,6 +152,7 @@ int main()
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
+    delete ourShader;
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
