@@ -24,6 +24,7 @@ imgui.ini
 mono_crash.*
 
 # Build results
+.vscode/
 [Dd]ebug/
 [Bb]uild/
 [Oo]ut/
