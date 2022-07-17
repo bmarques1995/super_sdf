@@ -1,26 +1,28 @@
-#ifndef SHADER_HH
-#define SHADER_HH
+#ifndef GL4_SHADER_HH
+#define GL4_SHADER_HH
 
 #include <glad/gl_safe_include.h>
 #include <unordered_map>
 #include <vector>
+
+#include "Interface/Graphics/Shader.hh"
 
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-class Shader
+class GL4Shader : public Shader
 {
 public:
     
-    Shader(const char* vertexSource, const char* fragmentSource);
-    ~Shader();
+    GL4Shader(const char* vertexSource, const char* fragmentSource);
+    ~GL4Shader();
     
-    void Bind() const;
-    void SetBool(const std::string &name, bool value) const;
-    void SetInt(const std::string &name, int value) const;
-    void SetFloat(const std::string &name, float value) const;
+    virtual void Bind() const override;
+    virtual void SetBool(const std::string &name, bool value) const override;
+    virtual void SetInt(const std::string &name, int value) const override;
+    virtual void SetFloat(const std::string &name, float value) const override;
 
 private:
 

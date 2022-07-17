@@ -1,6 +1,6 @@
-#include "Shader.hh"
+#include "GL4Shader.hh"
 
-Shader::Shader(const char* vertexSource, const char* fragmentSource)
+GL4Shader::GL4Shader(const char* vertexSource, const char* fragmentSource)
 {
 	m_ShaderMapping[GL_VERTEX_SHADER] = "Vertex";
 	m_ShaderMapping[GL_FRAGMENT_SHADER] = "Vertex";
@@ -12,32 +12,32 @@ Shader::Shader(const char* vertexSource, const char* fragmentSource)
 	m_ProgramID = Link(shaders);
 }
 
-Shader::~Shader()
+GL4Shader::~GL4Shader()
 {
 	glDeleteProgram(m_ProgramID);
 }
 
-void Shader::Bind() const
+void GL4Shader::Bind() const
 {
 	glUseProgram(m_ProgramID);
 }
 
-void Shader::SetBool(const std::string& name, bool value) const
+void GL4Shader::SetBool(const std::string& name, bool value) const
 {
 	glUniform1i(glGetUniformLocation(m_ProgramID, name.c_str()), (int)value);
 }
 
-void Shader::SetInt(const std::string& name, int value) const
+void GL4Shader::SetInt(const std::string& name, int value) const
 {
 	glUniform1i(glGetUniformLocation(m_ProgramID, name.c_str()), value);
 }
 
-void Shader::SetFloat(const std::string& name, float value) const
+void GL4Shader::SetFloat(const std::string& name, float value) const
 {
 	glUniform1f(glGetUniformLocation(m_ProgramID, name.c_str()), value);
 }
 
-unsigned Shader::Compile(const char* source, GLenum type)
+unsigned GL4Shader::Compile(const char* source, GLenum type)
 {
 	unsigned shader = glCreateShader(type);
 	glShaderSource(shader, 1, &source, NULL);
@@ -46,7 +46,7 @@ unsigned Shader::Compile(const char* source, GLenum type)
 	return shader;
 }
 
-unsigned Shader::Link(const std::vector<unsigned>& shaders)
+unsigned GL4Shader::Link(const std::vector<unsigned>& shaders)
 {
 	unsigned program = glCreateProgram();
 	for (auto& shader: shaders) 
@@ -63,7 +63,7 @@ unsigned Shader::Link(const std::vector<unsigned>& shaders)
 	return program;
 }
 
-void Shader::CheckCompileErrors(unsigned int shader, std::string_view shaderType)
+void GL4Shader::CheckCompileErrors(unsigned int shader, std::string_view shaderType)
 {
 	int success;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
@@ -84,7 +84,7 @@ void Shader::CheckCompileErrors(unsigned int shader, std::string_view shaderType
 	
 }
 
-void Shader::CheckLinkErrors(unsigned int program)
+void GL4Shader::CheckLinkErrors(unsigned int program)
 {
 	int success;
 	glGetProgramiv(program, GL_COMPILE_STATUS, &success);
