@@ -3,10 +3,19 @@
 Image::Image(std::string_view filepath, uint32_t desiredChannels)
 {
     int width, height, nrChannels;
-    m_Buffer = stbi_load("assets/textures/container.jpg", &width, &height, &nrChannels, desiredChannels);
+    m_Buffer = stbi_load(filepath.data(), &width, &height, &nrChannels, desiredChannels);
     m_Width = width > 0 ? width : 0;
     m_Height = height > 0 ? height : 0;
     m_Channels = desiredChannels;
+    m_FromFile = true;
+}
+
+Image::Image(uint8_t** buffer, uint32_t width, uint32_t height, uint32_t numberOfChannels)
+{
+    m_Buffer = *buffer;
+    m_Width = width;
+    m_Height = height;
+    m_Channels = numberOfChannels;
     m_FromFile = true;
 }
 

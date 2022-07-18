@@ -1,4 +1,4 @@
-#include <glad/gl.h>
+﻿#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
 
@@ -9,10 +9,11 @@
 #include "Implementation/Graphics/GL4/GL4Context.hh"
 #include "Implementation/Graphics/GL4/GL4InputLayout.hh"
 #include "Implementation/Window/GLFW/GLFWWindow.hh"
-#include "FileHandler.hh"
 
 #include <iostream>
 #include "wrappers/Image.hh"
+#include <FontFace.hh>
+#include <FileHandler.hh>
 
 // settings
 const unsigned int SCR_WIDTH = 600;
@@ -20,7 +21,8 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
-    
+    SuperSDF::FontFace* font = new SuperSDF::FontFace("assets/fonts/NotoSansJP-Light.otf", 64);
+    font->GetGlyphMetrics(U'ア');
     Window* window = new GLFWWindow(SCR_WIDTH, SCR_HEIGHT, "Super SDF Sample");
 
     Context* context = new GL4Context(std::any_cast<GLFWwindow*>(window->GetWindowPointer()));
@@ -38,12 +40,13 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
+    float x = 1.0;
     float vertices[] = {
         // positions          // colors           // texture coords
-         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+         0.5f/x,  0.5f/x, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+         0.5f/x, -0.5f/x, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+        -0.5f/x, -0.5f/x, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -0.5f/x,  0.5f/x, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
     };
     unsigned int indices[] = {  
         0, 1, 3, // first triangle
@@ -63,8 +66,8 @@ int main()
 
     // load and create a texture 
     // -------------------------
-    
-    Image* image = new Image("assets/textures/conteiner.jpg");
+
+    Image* image = new Image("assets/images/container.jpg");
 
     Texture* texture = new GL4Texture(*image);
     
@@ -102,6 +105,8 @@ int main()
     delete ourShader;
     delete context;
     delete window;
+
+    delete font;
 
     return 0;
 }

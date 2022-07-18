@@ -15,10 +15,12 @@ file(GLOB_RECURSE STANDALONE_HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/a
 
 file(GLOB_RECURSE V_SHAD RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/shaders/*.vs.glsl")
 file(GLOB_RECURSE F_SHAD RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/shaders/*.fs.glsl")
-file(GLOB_RECURSE PROJ_TEX RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/textures/*.jpg")
+file(GLOB_RECURSE PROJ_TEX RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/images/*.jpg")
+file(GLOB_RECURSE PROJ_TTF RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/fonts/*.ttf")
+file(GLOB_RECURSE PROJ_OTF RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/fonts/*.otf")
 
 add_library(super_sdf ${SUPER_SDF_SOURCES} ${SUPER_SDF_HEADERS})
-target_include_directories(super_sdf PRIVATE ./src/api/include)
+target_include_directories(super_sdf PRIVATE ./src/api/include ./vendor/stb)
 
 add_executable(super_sdf_standalone ${STANDALONE_SOURCES} ${STANDALONE_HEADERS})
 target_include_directories(super_sdf_standalone PRIVATE ./vendor/glfw/include ./vendor/glad/include ./vendor/stb ./src/app ./src/api/include)
@@ -28,7 +30,10 @@ foreach(vertex IN LISTS V_SHAD F_SHAD)
     file(COPY ${vertex} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/shaders)
 endforeach()
 
-foreach(vertex IN LISTS PROJ_TEX)
-    file(COPY ${vertex} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/textures)
+foreach(image IN LISTS PROJ_TEX)
+    file(COPY ${image} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/images)
 endforeach()
 
+foreach(font IN LISTS PROJ_TTF PROJ_OTF)
+    file(COPY ${font} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/fonts)
+endforeach()

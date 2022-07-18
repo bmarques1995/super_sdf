@@ -9,6 +9,7 @@ class Image
 {
 public:
 	Image(std::string_view filepath, uint32_t desiredChannels = 4);
+	Image(uint8_t** buffer, uint32_t width, uint32_t height, uint32_t numberOfChannels);
 	~Image();
 
 	uint8_t* GetBuffer() const;
