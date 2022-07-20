@@ -13,6 +13,7 @@
 #include <iostream>
 #include "wrappers/Image.hh"
 #include <FontFace.hh>
+#include <GlyphShape.hh>
 #include <FileHandler.hh>
 
 // settings
@@ -21,8 +22,12 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
-    SuperSDF::FontFace* font = new SuperSDF::FontFace("assets/fonts/NotoSansJP-Light.otf", 64);
-    font->GetGlyphMetrics(U'ア');
+    SuperSDF::FontFace* font = new SuperSDF::FontFace("assets/fonts/Roboto-Regular.ttf", 64);
+    
+    SuperSDF::GlyphShape shape(U'S');
+
+    shape.PushContours(*font);
+        
     Window* window = new GLFWWindow(SCR_WIDTH, SCR_HEIGHT, "Super SDF Sample");
 
     Context* context = new GL4Context(std::any_cast<GLFWwindow*>(window->GetWindowPointer()));

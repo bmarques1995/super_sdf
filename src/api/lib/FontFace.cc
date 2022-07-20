@@ -28,7 +28,7 @@ SuperSDF::FontFace::~FontFace()
 	delete[] m_Buffer;
 }
 
-void SuperSDF::FontFace::GetGlyphMetrics(unsigned glyphCode)
+void SuperSDF::FontFace::DebugGlyphMetrics(unsigned glyphCode) const
 {
 	std::cout << "Original Scale: " << m_FontHeight / m_Scale << "\n";
 	stbtt_vertex* verts;
@@ -59,9 +59,25 @@ void SuperSDF::FontFace::GetGlyphMetrics(unsigned glyphCode)
 			break;
 		}
 	}
+	stbtt_FreeShape(&m_FontInfo, verts);
 }
 
-stbtt_fontinfo& SuperSDF::FontFace::GetFontInfo()
+void SuperSDF::FontFace::GenGlyphMetrics(unsigned glyphCode, stbtt_vertex** vertices, size_t* verticesSize) const
 {
-	return m_FontInfo;
+	*verticesSize = (size_t)stbtt_GetGlyphShape(&m_FontInfo, stbtt_FindGlyphIndex(&m_FontInfo, glyphCode), vertices);
+}
+
+void SuperSDF::FontFace::DeleteGlyphMetrics(stbtt_vertex** vertices) const
+{
+	stbtt_FreeShape(&m_FontInfo, *vertices);
+}
+
+float SuperSDF::FontFace::GetScale() const
+{
+	return m_Scale;
+}
+
+float SuperSDF::FontFace::GetHeight() const
+{
+	return m_FontHeight;
 }

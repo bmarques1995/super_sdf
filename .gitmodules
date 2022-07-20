@@ -7,3 +7,6 @@
 [submodule "vendor/stb"]
 	path = vendor/stb
 	url = https://github.com/nothings/stb.git
+[submodule "vendor/eigen3"]
+	path = vendor/eigen3
+	url = https://gitlab.com/libeigen/eigen.git

@@ -20,10 +20,10 @@ file(GLOB_RECURSE PROJ_TTF RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/fonts/*.
 file(GLOB_RECURSE PROJ_OTF RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/fonts/*.otf")
 
 add_library(super_sdf ${SUPER_SDF_SOURCES} ${SUPER_SDF_HEADERS})
-target_include_directories(super_sdf PRIVATE ./src/api/include ./vendor/stb)
+target_include_directories(super_sdf PUBLIC ./src/api/include ./vendor/stb ./vendor/eigen3)
 
 add_executable(super_sdf_standalone ${STANDALONE_SOURCES} ${STANDALONE_HEADERS})
-target_include_directories(super_sdf_standalone PRIVATE ./vendor/glfw/include ./vendor/glad/include ./vendor/stb ./src/app ./src/api/include)
+target_include_directories(super_sdf_standalone PRIVATE ./vendor/glfw/include ./vendor/glad/include ./src/app ./src/api/include)
 target_link_libraries(super_sdf_standalone PRIVATE glfw glad super_sdf)
 
 foreach(vertex IN LISTS V_SHAD F_SHAD)
