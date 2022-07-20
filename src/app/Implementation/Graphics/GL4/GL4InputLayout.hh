@@ -12,7 +12,7 @@ public:
 
 	virtual void Bind() const override;
 private:
-	GLenum GL4InputLayout::GetFormat(ShaderDataType type);
+	GLenum GetFormat(ShaderDataType type);
 
 	uint32_t m_ElementID;
 	BufferLayout m_Layout;
