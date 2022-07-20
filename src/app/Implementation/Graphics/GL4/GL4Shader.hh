@@ -20,9 +20,7 @@ public:
     ~GL4Shader();
     
     virtual void Bind() const override;
-    virtual void SetBool(const std::string &name, bool value) const override;
-    virtual void SetInt(const std::string &name, int value) const override;
-    virtual void SetFloat(const std::string &name, float value) const override;
+    virtual void SetUniform(const std::string &name, void* value, size_t valueType) const override;
 
 private:
 

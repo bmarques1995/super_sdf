@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <vector>
+#include <cmath>
 #include <stb_truetype.h>
 
 namespace SuperSDF
@@ -19,6 +20,7 @@ namespace SuperSDF
 		Eigen::Array2f QuadraticControlPoint;
 		Eigen::Array2f CubicControlPoint;
 		PointType Type;
+		bool IsCorner;
 
 		Point(Eigen::Array2f locationPoint, Eigen::Array2f quadraticControlPoint, Eigen::Array2f cubicControlPoint, PointType type)
 		{
@@ -26,6 +28,7 @@ namespace SuperSDF
 			QuadraticControlPoint = quadraticControlPoint;
 			CubicControlPoint = cubicControlPoint;
 			Type = type;
+			IsCorner = false;
 		}
 	};
 
@@ -36,8 +39,12 @@ namespace SuperSDF
 		~Contour();
 
 		size_t AddSurface(stbtt_vertex* vertex, size_t size, size_t start);
-
 	private:
+		void SetClockwise();
+		void SetCorners();
+		size_t PushPoints(stbtt_vertex* vertex, size_t size, size_t start);
+		bool CheckCorner(size_t point, float toleranceAngle);
+
 		std::vector<Point> m_Contour;
 		bool m_Clockwise = true;
 	};

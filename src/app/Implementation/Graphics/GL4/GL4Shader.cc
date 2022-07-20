@@ -22,19 +22,9 @@ void GL4Shader::Bind() const
 	glUseProgram(m_ProgramID);
 }
 
-void GL4Shader::SetBool(const std::string& name, bool value) const
+void GL4Shader::SetUniform(const std::string& name, void* value, size_t valueType) const
 {
 	glUniform1i(glGetUniformLocation(m_ProgramID, name.c_str()), (int)value);
-}
-
-void GL4Shader::SetInt(const std::string& name, int value) const
-{
-	glUniform1i(glGetUniformLocation(m_ProgramID, name.c_str()), value);
-}
-
-void GL4Shader::SetFloat(const std::string& name, float value) const
-{
-	glUniform1f(glGetUniformLocation(m_ProgramID, name.c_str()), value);
 }
 
 unsigned GL4Shader::Compile(const char* source, GLenum type)
