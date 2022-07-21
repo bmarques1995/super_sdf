@@ -4,6 +4,8 @@ project(super_sdf LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
+option(BUILD_SUPER_SDF_STANDALONE "Build Standalone Super SDF Sample" ON)
+
 add_subdirectory(./vendor/glfw)
 add_subdirectory(./vendor/glad)
 
@@ -22,18 +24,20 @@ file(GLOB_RECURSE PROJ_OTF RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "assets/fonts/*.
 add_library(super_sdf ${SUPER_SDF_SOURCES} ${SUPER_SDF_HEADERS})
 target_include_directories(super_sdf PUBLIC ./src/api/include ./vendor/stb ./vendor/eigen3)
 
-add_executable(super_sdf_standalone ${STANDALONE_SOURCES} ${STANDALONE_HEADERS})
-target_include_directories(super_sdf_standalone PRIVATE ./vendor/glfw/include ./vendor/glad/include ./src/app ./src/api/include)
-target_link_libraries(super_sdf_standalone PRIVATE glfw glad super_sdf)
+if(BUILD_SUPER_SDF_STANDALONE)
+    add_executable(super_sdf_standalone ${STANDALONE_SOURCES} ${STANDALONE_HEADERS})
+    target_include_directories(super_sdf_standalone PRIVATE ./vendor/glfw/include ./vendor/glad/include ./src/app ./src/api/include)
+    target_link_libraries(super_sdf_standalone PRIVATE glfw glad super_sdf)
 
-foreach(vertex IN LISTS V_SHAD F_SHAD)
-    file(COPY ${vertex} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/shaders)
-endforeach()
+    foreach(vertex IN LISTS V_SHAD F_SHAD)
+        file(COPY ${vertex} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/shaders)
+    endforeach()
 
-foreach(image IN LISTS PROJ_TEX)
-    file(COPY ${image} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/images)
-endforeach()
+    foreach(image IN LISTS PROJ_TEX)
+        file(COPY ${image} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/images)
+    endforeach()
 
-foreach(font IN LISTS PROJ_TTF PROJ_OTF)
-    file(COPY ${font} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/fonts)
-endforeach()
+    foreach(font IN LISTS PROJ_TTF PROJ_OTF)
+        file(COPY ${font} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/fonts)
+    endforeach()
+endif()
