@@ -16,6 +16,8 @@ imgui.ini
 *.vcxproj.filters
 *.vcxproj.user
 *.ttf
+*.Rhistory
+*.RData
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

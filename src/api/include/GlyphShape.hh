@@ -11,14 +11,15 @@ namespace SuperSDF
 	{
 	public:
 
-		GlyphShape(unsigned charCode);
+		GlyphShape(unsigned charCode, const FontFace& font);
 		~GlyphShape();
-
-		void PushContours(const FontFace& font);
-
+		void PrintContours() const;
 	private:
-		unsigned m_CharCode;
+		void PushContours(unsigned charCode, const FontFace& font);
+		void CheckHullContours();
+
 		std::vector<Contour> m_Contours;
+		DrawBox m_DrawBox;
 	};
 }
 

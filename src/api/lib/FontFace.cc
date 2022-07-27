@@ -15,12 +15,8 @@ SuperSDF::FontFace::FontFace(std::string_view fontpath, float fontHeight) :
 	}
 	m_Scale = stbtt_ScaleForPixelHeight(&m_FontInfo, m_FontHeight);
 	
-	int ascent, descent, lineGap;
-	stbtt_GetFontVMetrics(&m_FontInfo, &ascent, &descent, &lineGap);
-
-	m_Ascent = roundf(ascent * m_Scale);
-	m_Descent = roundf(descent * m_Scale);
-	m_LineGap = roundf(lineGap * m_Scale);
+	
+	stbtt_GetFontVMetrics(&m_FontInfo, &m_Ascent, &m_Descent, &m_LineGap);
 }
 
 SuperSDF::FontFace::~FontFace()
@@ -28,46 +24,12 @@ SuperSDF::FontFace::~FontFace()
 	delete[] m_Buffer;
 }
 
-void SuperSDF::FontFace::DebugGlyphMetrics(unsigned glyphCode) const
-{
-	std::cout << "Original Scale: " << m_FontHeight / m_Scale << "\n";
-	stbtt_vertex* verts;
-	int num_verts = stbtt_GetGlyphShape(&m_FontInfo, stbtt_FindGlyphIndex(&m_FontInfo, glyphCode), &verts);
-	std::cout << "Glyph: " << (char) glyphCode <<"\n";
-	std::cout << "(X,Y) [QX,QY] {CX,CY} PAD TYP\n";
-	for (size_t i = 0; i < num_verts; i++)
-	{
-		std::cout << "(" << verts[i].x << "," << verts[i].y << ") "
-			<< "[" << verts[i].cx << "," << verts[i].cy << "] "
-			<< "{" << verts[i].cx1 << "," << verts[i].cy1 << "} "
-			<< verts[i].padding << " ";
-		switch (verts[i].type)
-		{
-		case STBTT_vmove:
-			std::cout << "Control\n";
-			break;
-		case STBTT_vline:
-			std::cout << "Line\n";
-			break;
-		case STBTT_vcurve:
-			std::cout << "Quadratic\n";
-			break;
-		case STBTT_vcubic:
-			std::cout << "Cubic\n";
-			break;
-		default:
-			break;
-		}
-	}
-	stbtt_FreeShape(&m_FontInfo, verts);
-}
-
-void SuperSDF::FontFace::GenGlyphMetrics(unsigned glyphCode, stbtt_vertex** vertices, size_t* verticesSize) const
+void SuperSDF::FontFace::GenGlyphShape(unsigned glyphCode, stbtt_vertex** vertices, size_t* verticesSize) const
 {
 	*verticesSize = (size_t)stbtt_GetGlyphShape(&m_FontInfo, stbtt_FindGlyphIndex(&m_FontInfo, glyphCode), vertices);
 }
 
-void SuperSDF::FontFace::DeleteGlyphMetrics(stbtt_vertex** vertices) const
+void SuperSDF::FontFace::DeleteGlyphShape(stbtt_vertex** vertices) const
 {
 	stbtt_FreeShape(&m_FontInfo, *vertices);
 }
@@ -80,4 +42,14 @@ float SuperSDF::FontFace::GetScale() const
 float SuperSDF::FontFace::GetHeight() const
 {
 	return m_FontHeight;
+}
+
+float SuperSDF::FontFace::GetAscent() const
+{
+	return m_Ascent;
+}
+
+float SuperSDF::FontFace::GetDescent() const
+{
+	return m_Descent;
 }

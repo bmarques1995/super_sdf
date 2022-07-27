@@ -14,17 +14,18 @@ namespace SuperSDF
 		FontFace(std::string_view fontpath, float fontHeight);
 		~FontFace();
 
-		void DebugGlyphMetrics(unsigned glyphCode) const;
-		void GenGlyphMetrics(unsigned glyphCode, stbtt_vertex** vertices, size_t* verticesSize) const;
-		void DeleteGlyphMetrics(stbtt_vertex** vertices) const;
+		void GenGlyphShape(unsigned glyphCode, stbtt_vertex** vertices, size_t* verticesSize) const;
+		void DeleteGlyphShape(stbtt_vertex** vertices) const;
 		float GetScale() const;
 		float GetHeight() const;
+		float GetAscent() const;
+		float GetDescent() const;
 	private:
 		float m_Scale;
 		float m_FontHeight;
 		stbtt_fontinfo m_FontInfo;
 		uint8_t* m_Buffer;
-		uint32_t m_Ascent, m_Descent, m_LineGap;
+		int32_t m_Ascent, m_Descent, m_LineGap;
 	};
 }
 

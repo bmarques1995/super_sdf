@@ -13,7 +13,7 @@
 #include <iostream>
 #include "wrappers/Image.hh"
 #include <FontFace.hh>
-#include <GlyphShape.hh>
+#include <Glyph.hh>
 #include <FileHandler.hh>
 
 // settings
@@ -22,11 +22,14 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
-    SuperSDF::FontFace* font = new SuperSDF::FontFace("assets/fonts/Roboto-Regular.ttf", 64);
+    SuperSDF::FontFace* font = new SuperSDF::FontFace("assets/fonts/NotoSansJP-Light.otf", 64);
     
-    SuperSDF::GlyphShape shape(U'S');
-
-    shape.PushContours(*font);
+    SuperSDF::Glyph glyph(U'の', *font);
+    glyph.PrintContours();
+    SuperSDF::Glyph glyph2(U'乪', *font);
+    glyph2.PrintContours();
+    SuperSDF::Glyph glyph3(U'バ', *font);
+    glyph3.PrintContours();
         
     Window* window = new GLFWWindow(SCR_WIDTH, SCR_HEIGHT, "Super SDF Sample");
 
