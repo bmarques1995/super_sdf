@@ -6,7 +6,7 @@
 #include <cmath>
 #include <stb_truetype.h>
 
-#include "FontHelpers.hh"
+#include "LinearAlgebra.hh"
 
 namespace SuperSDF
 {

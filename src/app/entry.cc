@@ -12,6 +12,9 @@
 
 #include <iostream>
 #include "wrappers/Image.hh"
+#include "CubicDistance.hh"
+#include "LinearDistance.hh"
+#include "QuadraticDistance.hh"
 #include <FontFace.hh>
 #include <Glyph.hh>
 #include <FileHandler.hh>
@@ -30,7 +33,14 @@ int main()
     glyph2.PrintContours();
     SuperSDF::Glyph glyph3(U'バ', *font);
     glyph3.PrintContours();
-        
+
+    Eigen::Vector2f location(0,0);
+    SuperSDF::Point p1(Eigen::Array2f(1, 0), Eigen::Array2f(0.1, 0), Eigen::Array2f(1, 0), SuperSDF::PointType::QuadraticBezier);
+    SuperSDF::Point p2(Eigen::Array2f(0, 1), Eigen::Array2f(0.1, 0), Eigen::Array2f(1, 0), SuperSDF::PointType::QuadraticBezier);
+    
+    float distance = SuperSDF::LinearDistance::DistancePoint(location, p1, p2);
+    distance = SuperSDF::QuadraticDistance::DistancePoint(location, p1, p2);
+
     Window* window = new GLFWWindow(SCR_WIDTH, SCR_HEIGHT, "Super SDF Sample");
 
     Context* context = new GL4Context(std::any_cast<GLFWwindow*>(window->GetWindowPointer()));
