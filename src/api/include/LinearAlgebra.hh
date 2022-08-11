@@ -19,11 +19,6 @@ namespace SuperSDF
 		CubicBezier
 	};
 
-	struct Utils
-	{
-		static float Clamp(float value, float lowerValue, float upperValue);
-	};
-
 	struct Point
 	{
 		Eigen::Vector2f LocationPoint;

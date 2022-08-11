@@ -34,12 +34,13 @@ int main()
     SuperSDF::Glyph glyph3(U'バ', *font);
     glyph3.PrintContours();
 
-    Eigen::Vector2f location(0,0);
-    SuperSDF::Point p1(Eigen::Array2f(1, 0), Eigen::Array2f(0.1, 0), Eigen::Array2f(1, 0), SuperSDF::PointType::QuadraticBezier);
-    SuperSDF::Point p2(Eigen::Array2f(0, 1), Eigen::Array2f(0.1, 0), Eigen::Array2f(1, 0), SuperSDF::PointType::QuadraticBezier);
+    Eigen::Vector2f location(0,.9f);
+    SuperSDF::Point p1(Eigen::Array2f(0, 0), Eigen::Array2f(0.1, 0), Eigen::Array2f(1, 0), SuperSDF::PointType::QuadraticBezier);
+    SuperSDF::Point p2(Eigen::Array2f(1, 1), Eigen::Array2f(0.1, 0), Eigen::Array2f(1, 0), SuperSDF::PointType::QuadraticBezier);
     
-    float distance = SuperSDF::LinearDistance::DistancePoint(location, p1, p2);
-    distance = SuperSDF::QuadraticDistance::DistancePoint(location, p1, p2);
+    float abscissa, abscissa2;
+    float distance = SuperSDF::LinearDistance::DistancePoint(location, p1, p2, abscissa);
+    float distance2 = SuperSDF::QuadraticDistance::DistancePoint(location, p1, p2, abscissa2);
 
     Window* window = new GLFWWindow(SCR_WIDTH, SCR_HEIGHT, "Super SDF Sample");
 

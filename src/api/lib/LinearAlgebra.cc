@@ -9,15 +9,6 @@ SuperSDF::Point::Point(Eigen::Array2f locationPoint, Eigen::Array2f quadraticCon
 	IsCorner = false;
 }
 
-float SuperSDF::Utils::Clamp(float value, float lowerValue, float upperValue)
-{
-	if (value <= lowerValue)
-		value = lowerValue;
-	if (value >= upperValue)
-		value = upperValue;
-	return value;
-}
-
 bool SuperSDF::Segment::Cross(const Segment& segment1, const Segment& segment2)
 {
 	bool initialSegmentCross, finalSegmentCross;

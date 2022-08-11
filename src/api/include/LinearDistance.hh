@@ -8,7 +8,8 @@ namespace SuperSDF
 	class LinearDistance
 	{
 	public:
-		static float DistancePoint(const Eigen::Vector2f& location, const Point& p1, const Point& p2);
+		static float DistancePoint(const Eigen::Vector2f& location, const Point& p1, const Point& p2, float& abscissaOut);
+		static float GetOrthogonality(const Eigen::Vector2f& location, const Point& p1, const Point& p2, float abscissa);
 	private:
 		static float GetAbscissa(const Eigen::Vector2f& location, const Point& p1, const Point& p2);
 	};
